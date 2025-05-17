@@ -27,6 +27,9 @@ public class Program
             set { _tempFound = value; }
         }
 
+        /// <summary>
+        /// The up-to-date Graphics Card temperature
+        /// </summary>
         public static int CurrentGpuTemp
         {
             get { return _currentGpuTemp; }
@@ -56,26 +59,41 @@ public class Program
         // If this bool becomes false, exit the loop (stop the program).
         bool continueProgram = true;
 
-        // Begin loop. Only stop when the above bool is changed to false (this is how we monitor continuously).
-        while (continueProgram == true)
+        do
         {
-            GetGpuTemp(computer);            
+            GetGpuTemp(computer);
 
-            if (!_tempFound)
+            if (_tempFound == false)
             {
                 Console.Clear();
-                Console.WriteLine("No GPU temperature sensor found.");                
+                Console.WriteLine("No GPU temperature sensor found.");
             }
 
-
-
-
             // Wait for a few seconds before updating again
-            Thread.Sleep(3000); // Update every 2 seconds (2000 milliseconds)
+            Thread.Sleep(2000); // Update every 2 seconds (2000 milliseconds)
         }
+        while (continueProgram == true);
 
         // Close the hardware monitoring (though it will never reach here unless the program ends)
-         computer.Close();
+        computer.Close();
+
+        // Begin loop. Only stop when the above bool is changed to false (this is how we monitor continuously).
+        //while (continueProgram == true)
+        //{
+        //    GetGpuTemp(computer);            
+
+        //    if (!_tempFound)
+        //    {
+        //        Console.Clear();
+        //        Console.WriteLine("No GPU temperature sensor found.");                
+        //    }
+
+        //    // Wait for a few seconds before updating again
+        //    Thread.Sleep(2000); // Update every 2 seconds (2000 milliseconds)
+        //}
+
+        // Close the hardware monitoring (though it will never reach here unless the program ends)
+        //computer.Close();
     }
 
     /// <summary>
